@@ -1,17 +1,24 @@
 package com.example.revendacarro.dto;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 public class AtualizaProprietarioDTO {
 
+    @NotNull
     private Long id;
 
+    @NotNull
     private String nome;
 
+    @NotNull
     private String cpfCnpj;
 
+    @NotNull
     private LocalDate dataNascimento;
 
+    @NotNull
     private LocalDate dataCadastro;
 
     public Long getId() {

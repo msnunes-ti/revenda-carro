@@ -1,17 +1,17 @@
 package com.example.revendacarro.dto;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 public class CadastraProprietarioDTO {
 
-    @NotBlank
+    @NotNull
     private String nome;
 
-    @NotBlank
+    @NotNull
     private String cpfCnpj;
 
-    @NotBlank
+    @NotNull
     private LocalDate dataNascimento;
 
     public String getNome() {

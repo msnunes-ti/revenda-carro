@@ -9,4 +9,6 @@ public interface ProprietarioRepository extends JpaRepository<Proprietario, Long
 
     List<Proprietario> findByCpfCnpj(String cpfCnpj);
 
+    long countByCpfCnpj(String cpfCnpj);
+
 }

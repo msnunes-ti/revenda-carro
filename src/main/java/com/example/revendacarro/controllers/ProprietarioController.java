@@ -44,8 +44,8 @@ public class ProprietarioController {
         proprietarioService.atualizaProprietario(atualizaProprietarioDTO);
     }
 
-    @DeleteMapping
-    public void deletarProprietario(Long id) {
+    @DeleteMapping(path = "/{id}/id")
+    public void deletarProprietario(@PathVariable Long id) {
         proprietarioService.deletarProprietario(id);
     }
 

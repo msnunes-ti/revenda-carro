@@ -31,6 +31,10 @@ public class ProprietarioService {
     }
 
     public void cadastraProprietario(CadastraProprietarioDTO cadastraProprietarioDTO) {
+        long proprietarioEncontrado = proprietarioRepository.countByCpfCnpj(cadastraProprietarioDTO.getCpfCnpj());
+        if (proprietarioEncontrado >=1) {
+            throw new RuntimeException("Esse CPF ou CNPJ já está cadastrado.");
+        }
         Proprietario proprietario = new Proprietario();
         proprietario.setNome(cadastraProprietarioDTO.getNome());
         proprietario.setCpfCnpj(cadastraProprietarioDTO.getCpfCnpj());
