@@ -1,29 +1,17 @@
-package com.example.revendacarro.model;
+package com.example.revendacarro.dto;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
-@Entity
-public class Proprietario {
+public class AtualizaProprietarioDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
     private String nome;
 
-    @NotNull
     private String cpfCnpj;
 
-    @NotNull
     private LocalDate dataNascimento;
 
-    @NotNull
     private LocalDate dataCadastro;
 
     public Long getId() {
@@ -66,4 +54,3 @@ public class Proprietario {
         this.dataCadastro = dataCadastro;
     }
 }
-
