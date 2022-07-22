@@ -4,34 +4,29 @@ import com.example.revendacarro.dto.AtualizaProprietarioDTO;
 import com.example.revendacarro.dto.CadastraProprietarioDTO;
 import com.example.revendacarro.model.Proprietario;
 import com.example.revendacarro.services.ProprietarioService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
-@RequestMapping(path = "/revenda/proprietario")
+@RequestMapping(path = "/proprietarios")
+@RequiredArgsConstructor
 public class ProprietarioController {
 
-    @Autowired
-    ProprietarioService proprietarioService;
+    private final ProprietarioService proprietarioService;
+    private String nome;
 
     @GetMapping
-    public List<Proprietario> buscarTodos() {
-        return proprietarioService.buscarTodos();
+    public List<Proprietario> buscarTodos(@RequestParam(required = false) String cpfCnpj) {
+        return proprietarioService.buscarTodos(cpfCnpj);
     }
 
-    @GetMapping(path = "/{id}/id")
-    public Optional<Proprietario> buscarPorId(@PathVariable(required = false) Long id) {
+    @GetMapping(path = "/{id}")
+    public Proprietario buscarPorId(@PathVariable Long id) {
         return proprietarioService.buscarPorId(id);
-    }
-
-    @GetMapping(path = "/{cpfCnpj}")
-    public List<Proprietario> buscarPorCpfCnpj(@PathVariable(required = false) String cpfCnpj) {
-        return proprietarioService.buscarPorCpfCnpj(cpfCnpj);
     }
 
     @PostMapping
@@ -39,12 +34,12 @@ public class ProprietarioController {
         proprietarioService.cadastraProprietario(cadastraProprietarioDTO);
     }
 
-    @PutMapping
-    public @ResponseBody void atualizaProprietario(@RequestBody @Valid @NotBlank AtualizaProprietarioDTO atualizaProprietarioDTO) {
-        proprietarioService.atualizaProprietario(atualizaProprietarioDTO);
+    @PutMapping(path = "/{id}")
+    public @ResponseBody void atualizaProprietario(@PathVariable Long id, @RequestBody @Valid @NotBlank AtualizaProprietarioDTO atualizaProprietarioDTO) {
+        proprietarioService.atualizaProprietario(id, atualizaProprietarioDTO);
     }
 
-    @DeleteMapping(path = "/{id}/id")
+    @DeleteMapping(path = "/{id}")
     public void deletarProprietario(@PathVariable Long id) {
         proprietarioService.deletarProprietario(id);
     }

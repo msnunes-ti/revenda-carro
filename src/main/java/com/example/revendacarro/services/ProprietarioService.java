@@ -3,58 +3,52 @@ package com.example.revendacarro.services;
 import com.example.revendacarro.Repository.ProprietarioRepository;
 import com.example.revendacarro.dto.AtualizaProprietarioDTO;
 import com.example.revendacarro.dto.CadastraProprietarioDTO;
+import com.example.revendacarro.mapper.AtualizaProprietarioDtoMapper;
+import com.example.revendacarro.mapper.CadastraProprietarioDtoMapper;
 import com.example.revendacarro.model.Proprietario;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.validation.Valid;
-import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class ProprietarioService {
 
-    @Autowired
-    ProprietarioRepository proprietarioRepository;
+    private final ProprietarioRepository proprietarioRepository;
 
-    public List<Proprietario> buscarTodos() {
-        return proprietarioRepository.findAll();
-    }
-
-    public Optional<Proprietario> buscarPorId(Long id) {
-        return proprietarioRepository.findById(id);
-    }
-
-    public List<Proprietario> buscarPorCpfCnpj(String cpfCnpj) {
+    public List<Proprietario> buscarTodos(String cpfCnpj) {
+        if (cpfCnpj == null) {
+            return proprietarioRepository.findAll();
+        }
         return proprietarioRepository.findByCpfCnpj(cpfCnpj);
+    }
+
+    public Proprietario buscarPorId(Long id) {
+        return buscarProprietarioPorId(id);
+    }
+
+    private Proprietario buscarProprietarioPorId(Long id) {
+        return proprietarioRepository.findById(id).orElseThrow(() -> new RuntimeException("ID não encontrado."));
     }
 
     public void cadastraProprietario(CadastraProprietarioDTO cadastraProprietarioDTO) {
         long proprietarioEncontrado = proprietarioRepository.countByCpfCnpj(cadastraProprietarioDTO.getCpfCnpj());
-        if (proprietarioEncontrado >=1) {
+        if (proprietarioEncontrado > 0) {
             throw new RuntimeException("Esse CPF ou CNPJ já está cadastrado.");
         }
-        Proprietario proprietario = new Proprietario();
-        proprietario.setNome(cadastraProprietarioDTO.getNome());
-        proprietario.setCpfCnpj(cadastraProprietarioDTO.getCpfCnpj());
-        proprietario.setDataNascimento(cadastraProprietarioDTO.getDataNascimento());
-        proprietario.setDataCadastro(LocalDate.now());
-        proprietarioRepository.save(proprietario);
+        proprietarioRepository.save(CadastraProprietarioDtoMapper.toProprietario(cadastraProprietarioDTO));
     }
 
-    public void atualizaProprietario(@Valid AtualizaProprietarioDTO atualizaProprietarioDTO) {
-        Proprietario proprietario = proprietarioRepository.getById(atualizaProprietarioDTO.getId());
-        proprietario.setId(atualizaProprietarioDTO.getId());
-        proprietario.setNome(atualizaProprietarioDTO.getNome());
-        proprietario.setCpfCnpj(atualizaProprietarioDTO.getCpfCnpj());
-        proprietario.setDataNascimento(atualizaProprietarioDTO.getDataNascimento());
-        proprietario.setDataCadastro(atualizaProprietarioDTO.getDataCadastro());
+    public void atualizaProprietario(Long id, AtualizaProprietarioDTO atualizaProprietarioDTO) {
+        Proprietario proprietario = buscarProprietarioPorId(id);
+        proprietario = AtualizaProprietarioDtoMapper.toProprietario(atualizaProprietarioDTO);
         proprietarioRepository.save(proprietario);
     }
 
     public void deletarProprietario(Long id) {
-        proprietarioRepository.deleteById(id);
+        Proprietario proprietario = buscarProprietarioPorId(id);
+        proprietarioRepository.delete(proprietario);
     }
 
 }

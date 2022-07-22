@@ -1,19 +1,16 @@
-package com.example.revendacarro.model;
+package com.example.revendacarro.dto;
 
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
-@Entity
 @Getter
 @Setter
-public class Proprietario {
+public class ProprietarioDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @NotNull
     private Long id;
 
     @NotNull
@@ -29,4 +26,3 @@ public class Proprietario {
     private LocalDate dataCadastro;
 
 }
-
