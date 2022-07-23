@@ -3,8 +3,10 @@ package com.example.revendacarro.services;
 import com.example.revendacarro.Repository.ProprietarioRepository;
 import com.example.revendacarro.dto.AtualizaProprietarioDTO;
 import com.example.revendacarro.dto.CadastraProprietarioDTO;
-import com.example.revendacarro.mapper.AtualizaProprietarioDtoMapper;
-import com.example.revendacarro.mapper.CadastraProprietarioDtoMapper;
+import com.example.revendacarro.dto.ProprietarioDTO;
+import com.example.revendacarro.mapper.AtualizaProprietarioDTOMapper;
+import com.example.revendacarro.mapper.CadastraProprietarioDTOMapper;
+import com.example.revendacarro.mapper.ProprietarioMapper;
 import com.example.revendacarro.model.Proprietario;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,15 +19,17 @@ public class ProprietarioService {
 
     private final ProprietarioRepository proprietarioRepository;
 
-    public List<Proprietario> buscarTodos(String cpfCnpj) {
+    public List<ProprietarioDTO> buscarTodos(String cpfCnpj) {
         if (cpfCnpj == null) {
-            return proprietarioRepository.findAll();
+            List<Proprietario> proprietarioList = proprietarioRepository.findAll();
+            return ProprietarioMapper.toProprietarioDTOList(proprietarioList);
         }
-        return proprietarioRepository.findByCpfCnpj(cpfCnpj);
+        List<Proprietario> proprietarioList = proprietarioRepository.findByCpfCnpj(cpfCnpj);
+        return ProprietarioMapper.toProprietarioDTOList(proprietarioList);
     }
 
-    public Proprietario buscarPorId(Long id) {
-        return buscarProprietarioPorId(id);
+    public ProprietarioDTO buscarPorId(Long id) {
+        return ProprietarioMapper.toProprietarioDTO(buscarProprietarioPorId(id));
     }
 
     private Proprietario buscarProprietarioPorId(Long id) {
@@ -37,12 +41,13 @@ public class ProprietarioService {
         if (proprietarioEncontrado > 0) {
             throw new RuntimeException("Esse CPF ou CNPJ já está cadastrado.");
         }
-        proprietarioRepository.save(CadastraProprietarioDtoMapper.toProprietario(cadastraProprietarioDTO));
+        proprietarioRepository.save(CadastraProprietarioDTOMapper.toProprietario(cadastraProprietarioDTO));
     }
 
     public void atualizaProprietario(Long id, AtualizaProprietarioDTO atualizaProprietarioDTO) {
-        Proprietario proprietario = buscarProprietarioPorId(id);
-        proprietario = AtualizaProprietarioDtoMapper.toProprietario(atualizaProprietarioDTO);
+        Proprietario proprietario;
+        proprietario = AtualizaProprietarioDTOMapper.toProprietario(atualizaProprietarioDTO);
+        proprietario.setId(buscarProprietarioPorId(id).getId());
         proprietarioRepository.save(proprietario);
     }
 

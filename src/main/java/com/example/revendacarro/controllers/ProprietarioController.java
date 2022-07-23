@@ -2,7 +2,7 @@ package com.example.revendacarro.controllers;
 
 import com.example.revendacarro.dto.AtualizaProprietarioDTO;
 import com.example.revendacarro.dto.CadastraProprietarioDTO;
-import com.example.revendacarro.model.Proprietario;
+import com.example.revendacarro.dto.ProprietarioDTO;
 import com.example.revendacarro.services.ProprietarioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -20,12 +20,12 @@ public class ProprietarioController {
     private String nome;
 
     @GetMapping
-    public List<Proprietario> buscarTodos(@RequestParam(required = false) String cpfCnpj) {
+    public List<ProprietarioDTO> buscarTodos(@RequestParam(required = false) String cpfCnpj) {
         return proprietarioService.buscarTodos(cpfCnpj);
     }
 
     @GetMapping(path = "/{id}")
-    public Proprietario buscarPorId(@PathVariable Long id) {
+    public ProprietarioDTO buscarPorId(@PathVariable Long id) {
         return proprietarioService.buscarPorId(id);
     }
 
@@ -41,6 +41,7 @@ public class ProprietarioController {
 
     @DeleteMapping(path = "/{id}")
     public void deletarProprietario(@PathVariable Long id) {
+
         proprietarioService.deletarProprietario(id);
     }
 

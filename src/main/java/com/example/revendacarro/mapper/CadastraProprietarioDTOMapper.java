@@ -5,7 +5,7 @@ import com.example.revendacarro.model.Proprietario;
 
 import java.time.LocalDate;
 
-public class CadastraProprietarioDtoMapper {
+public class CadastraProprietarioDTOMapper {
 
     public static Proprietario toProprietario(CadastraProprietarioDTO cadastraProprietarioDTO) {
         Proprietario proprietario = new Proprietario();
