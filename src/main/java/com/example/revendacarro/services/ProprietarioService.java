@@ -19,6 +19,10 @@ public class ProprietarioService {
 
     private final ProprietarioRepository proprietarioRepository;
 
+    private Proprietario buscarProprietarioPorId(Long id) {
+        return proprietarioRepository.findById(id).orElseThrow(() -> new RuntimeException("ID do Proprietário não encontrado."));
+    }
+
     public List<ProprietarioDTO> buscarTodos(String cpfCnpj) {
         if (cpfCnpj == null) {
             List<Proprietario> proprietarioList = proprietarioRepository.findAll();
@@ -30,10 +34,6 @@ public class ProprietarioService {
 
     public ProprietarioDTO buscarPorId(Long id) {
         return ProprietarioMapper.toProprietarioDTO(buscarProprietarioPorId(id));
-    }
-
-    private Proprietario buscarProprietarioPorId(Long id) {
-        return proprietarioRepository.findById(id).orElseThrow(() -> new RuntimeException("ID não encontrado."));
     }
 
     public void cadastraProprietario(CadastraProprietarioDTO cadastraProprietarioDTO) {

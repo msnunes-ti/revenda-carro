@@ -1,14 +1,9 @@
 package com.example.revendacarro.model;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Getter
-@Setter
 public class Montadora {
 
     @Id
@@ -19,4 +14,36 @@ public class Montadora {
     @Column(name = "nome")
     private String nome;
 
+    public Montadora(Builder builder) {
+        super();
+        this.id = builder.id;
+        this.nome = builder.nome;
+    }
+    public Long getId() {
+        return id;
+    }
+    public void setId(Long id) {
+        this.id = id;
+    }
+    public String getNome() {
+        return nome;
+    }
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+    public static class Builder {
+        private Long id;
+        private String nome;
+
+        public Builder(Long id) {
+            this.id = id;
+        }
+        public Builder nome(String nome) {
+            this.nome = nome;
+            return this;
+        }
+        public Montadora build() {
+            return new Montadora(this);
+        }
+    }
 }
