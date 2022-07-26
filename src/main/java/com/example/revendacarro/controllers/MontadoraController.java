@@ -3,7 +3,6 @@ package com.example.revendacarro.controllers;
 import com.example.revendacarro.dto.AtualizaMontadoraDTO;
 import com.example.revendacarro.dto.CadastraMontadoraDTO;
 import com.example.revendacarro.dto.MontadoraDTO;
-import com.example.revendacarro.model.Montadora;
 import com.example.revendacarro.services.MontadoraService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -36,6 +35,11 @@ public class MontadoraController {
 
     @PutMapping(path = "/{id}")
     public @ResponseBody void atualizaMontadora(@PathVariable Long id, @RequestBody @Valid @NotBlank AtualizaMontadoraDTO atualizaMontadoraDTO) {
+        montadoraService.atualizaMontadora(id, atualizaMontadoraDTO);
+    }
 
+    @DeleteMapping(path = "/{id}")
+    public void deletarMontadora(@PathVariable Long id) {
+        montadoraService.deletarMontadora(id);
     }
 }

@@ -4,7 +4,6 @@ import com.example.revendacarro.Repository.MontadoraRepository;
 import com.example.revendacarro.dto.AtualizaMontadoraDTO;
 import com.example.revendacarro.dto.CadastraMontadoraDTO;
 import com.example.revendacarro.dto.MontadoraDTO;
-import com.example.revendacarro.mapper.AtualizaMontadoraDTOMapper;
 import com.example.revendacarro.mapper.CadastraMontadoraDTOMapper;
 import com.example.revendacarro.mapper.MontadoraMapper;
 import com.example.revendacarro.model.Montadora;
@@ -26,10 +25,10 @@ public class MontadoraService {
     public List<MontadoraDTO> buscarTodas(String nome) {
         if (nome == null) {
             List<Montadora> montadoraList = montadoraRepository.findAll();
-            return MontadoraMapper.montadoraDTOList(montadoraList);
+            return MontadoraMapper.toMontadoraDTOList(montadoraList);
         }
         List<Montadora> montadoraList = montadoraRepository.findByNome(nome);
-        return MontadoraMapper.montadoraDTOList(montadoraList);
+        return MontadoraMapper.toMontadoraDTOList(montadoraList);
     }
 
     public MontadoraDTO buscarMontadoraPorId(Long id) {
@@ -46,10 +45,15 @@ public class MontadoraService {
     }
 
     public void atualizaMontadora(Long id, AtualizaMontadoraDTO atualizaMontadoraDTO) {
-        Montadora montadora;
-        montadora = AtualizaMontadoraDTOMapper.toMontadora(atualizaMontadoraDTO);
-        montadora.setId(buscarPorId(id).getId());
+        Montadora montadora = buscarPorId(id);
+        montadora.setNome(atualizaMontadoraDTO.getNome());
         montadoraRepository.save(montadora);
     }
 
+    public void deletarMontadora(Long id) {
+        Montadora montadora = buscarPorId(id);
+        montadoraRepository.delete(montadora);
+    }
+
 }
+

@@ -41,7 +41,6 @@ public class ProprietarioController {
 
     @DeleteMapping(path = "/{id}")
     public void deletarProprietario(@PathVariable Long id) {
-
         proprietarioService.deletarProprietario(id);
     }
 
