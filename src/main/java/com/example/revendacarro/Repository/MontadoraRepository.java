@@ -7,5 +7,7 @@ import java.util.List;
 
 public interface MontadoraRepository extends JpaRepository<Montadora, Long> {
 
-    List<Montadora> findByNomeIgnoreCase(String nome);
+    List<Montadora> findByNome(String nome);
+
+    Long countByNome(String nome);
 }

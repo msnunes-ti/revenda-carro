@@ -31,12 +31,14 @@ public class Montadora {
     public void setNome(String nome) {
         this.nome = nome;
     }
+
     public static class Builder {
         private Long id;
         private String nome;
 
-        public Builder(Long id) {
+        public Builder id (Long id) {
             this.id = id;
+            return this;
         }
         public Builder nome(String nome) {
             this.nome = nome;
