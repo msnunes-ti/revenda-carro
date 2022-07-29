@@ -1,6 +1,5 @@
 package com.example.revendacarro.model;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,7 +9,6 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Getter
 @Setter
-@Builder
 public class Opcional {
 
     @Id
@@ -20,5 +18,4 @@ public class Opcional {
     @NotNull
     @Column(name = "nome")
     String nome;
-
 }

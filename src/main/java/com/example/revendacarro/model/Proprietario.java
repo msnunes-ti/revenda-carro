@@ -2,6 +2,7 @@ package com.example.revendacarro.model;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -11,7 +12,7 @@ import java.time.LocalDate;
 @Entity
 @Getter
 @Setter
-@Builder
+@RequiredArgsConstructor
 public class Proprietario {
 
     @Id
