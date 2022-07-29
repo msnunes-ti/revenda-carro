@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface OpcionalRepository extends JpaRepository<Opcional, Long> {
 
-    List<Opcional> findByNomeIgnoreCase();
+    List<Opcional> findByNomeContains(String nome);
 }

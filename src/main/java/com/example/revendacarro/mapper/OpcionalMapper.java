@@ -11,7 +11,7 @@ public class OpcionalMapper {
     public static OpcionalDTO toOpcionalDTO(Opcional opcional) {
         OpcionalDTO opcionalDTO = new OpcionalDTO();
         opcionalDTO.setId(opcional.getId());
-        opcionalDTO.setNome(opcionalDTO.getNome());
+        opcionalDTO.setNome(opcional.getNome());
         return opcionalDTO;
     }
 
