@@ -48,4 +48,9 @@ public class OpcionalService {
         opcionalRepository.save(opcional);
     }
 
+    public void deletaOpcional(Long id) {
+        Opcional opcional = buscaPorId(id);
+        opcionalRepository.delete(opcional);
+    }
+
 }

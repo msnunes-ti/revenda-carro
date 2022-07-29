@@ -38,4 +38,8 @@ public class OpcionalController {
         opcionalService.atualizaOpcional(id, atualizaOpcionalDTO);
     }
 
+    @DeleteMapping(path = "/{id}")
+    public void deleteOpcional(@PathVariable Long id) {
+        opcionalService.deletaOpcional(id);
+    }
 }
