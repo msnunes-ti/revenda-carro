@@ -27,6 +27,5 @@ public class Proprietario {
 
     @NotNull
     private LocalDate dataCadastro;
-
 }
 
