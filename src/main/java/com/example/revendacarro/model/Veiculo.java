@@ -30,6 +30,7 @@ public class Veiculo {
     private String cor;
 
     @NotNull
+    @Column(unique = true)
     private String placa;
 
     @NotNull
@@ -37,10 +38,10 @@ public class Veiculo {
     private Proprietario proprietario;
 
     @NotNull
-    @OneToMany
+    @ManyToMany
     private List<Opcional> opcionais;
 
-    @NotNull
+//    @NotNull
     private BigDecimal valor;
 
     private Boolean isVendido;

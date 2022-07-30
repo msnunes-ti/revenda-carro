@@ -1,12 +1,8 @@
 package com.example.revendacarro.dto;
 
-import com.example.revendacarro.model.Montadora;
-import com.example.revendacarro.model.Opcional;
-import com.example.revendacarro.model.Proprietario;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -15,7 +11,7 @@ import java.util.List;
 public class CadastraVeiculoDTO {
 
 //    @NotNull
-    private Montadora montadora;
+    private Long montadoraId;
 
 //    @NotNull
     private String modelo;
@@ -27,11 +23,11 @@ public class CadastraVeiculoDTO {
     private String placa;
 
 //    @NotNull
-    private Proprietario proprietario;
+    private Long proprietarioId;
 
 //    @NotNull
-    private List<Opcional> opcionais;
+    private List<Long> opcionaisIds;
 
 //    @NotNull
-    private BigDecimal valor;
+    private Double valor;
 }
