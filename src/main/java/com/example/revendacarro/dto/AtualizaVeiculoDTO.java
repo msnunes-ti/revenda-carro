@@ -4,12 +4,11 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
-import java.math.BigDecimal;
 import java.util.List;
 
 @Getter
 @Setter
-public class CadastraVeiculoDTO {
+public class AtualizaVeiculoDTO {
 
     @NotNull
     private Long montadoraId;
@@ -31,4 +30,7 @@ public class CadastraVeiculoDTO {
 
     @NotNull
     private Double valor;
+
+    @NotNull
+    private Boolean isVendido;
 }

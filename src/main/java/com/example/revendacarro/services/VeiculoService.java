@@ -1,6 +1,7 @@
 package com.example.revendacarro.services;
 
 import com.example.revendacarro.Repository.VeiculoRepository;
+import com.example.revendacarro.dto.AtualizaVeiculoDTO;
 import com.example.revendacarro.dto.CadastraVeiculoDTO;
 import com.example.revendacarro.dto.VeiculoDTO;
 import com.example.revendacarro.mapper.*;
@@ -8,6 +9,8 @@ import com.example.revendacarro.model.Opcional;
 import com.example.revendacarro.model.Veiculo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -31,11 +34,11 @@ public class VeiculoService {
         return VeiculoMapper.toVeiculoDTO(veiculo);
     }
 
-    public List<VeiculoDTO> buscarTodos(String nome) {
-        if (nome == null) {
+    public List<VeiculoDTO> buscarTodos(String modelo) {
+        if (modelo == null) {
             return VeiculoMapper.veiculoDTOList(veiculoRepository.findAll());
         }
-        return VeiculoMapper.veiculoDTOList(veiculoRepository.findAllByNome(nome));
+        return VeiculoMapper.veiculoDTOList(veiculoRepository.findByModeloContains(modelo));
     }
 
     public void cadastraVeiculo(CadastraVeiculoDTO cadastraVeiculoDTO) {
@@ -49,7 +52,28 @@ public class VeiculoService {
             opcionalList.add(OpcionalDTOMapper.toOpcional(opcionalService.buscaOpcionalPeloId(l)));
         }
         veiculo.setOpcionais(opcionalList);
+        veiculo.setIsVendido(false);
         veiculoRepository.save(veiculo);
     }
 
+    public void atualizaVeiculo(Long id, AtualizaVeiculoDTO atualizaVeiculoDTO) {
+        Veiculo veiculoEncontrado = buscaPorId(id);
+        Veiculo veiculo = AtualizaVeiculoDTOMapper.toVeiculo(atualizaVeiculoDTO);
+        veiculo.setId(veiculoEncontrado.getId());
+        veiculo.setMontadora(MontadoraDTOMapper.toMontadora(montadoraService.buscarMontadoraPorId(atualizaVeiculoDTO.getMontadoraId())));
+        veiculo.setValor(BigDecimal.valueOf(atualizaVeiculoDTO.getValor()));
+        veiculo.setProprietario(ProprietarioDTOMapper.toProprietario(proprietarioService.buscarPorId(atualizaVeiculoDTO.getProprietarioId())));
+        List<Long> opcionalId = atualizaVeiculoDTO.getOpcionaisIds();
+        List<Opcional> opcionalList = new ArrayList<>();
+        for (Long l : opcionalId) {
+            opcionalList.add(OpcionalDTOMapper.toOpcional(opcionalService.buscaOpcionalPeloId(l)));
+        }
+        veiculo.setOpcionais(opcionalList);
+        veiculoRepository.save(veiculo);
+    }
+
+    public void deletarVeiculo(Long id) {
+        Veiculo veiculo = buscaPorId(id);
+        veiculoRepository.delete(veiculo);
+    }
 }
