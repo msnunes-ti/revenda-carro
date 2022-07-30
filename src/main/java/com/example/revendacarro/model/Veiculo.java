@@ -1,13 +1,10 @@
 package com.example.revendacarro.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.List;
@@ -15,7 +12,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class Veiculo {
 
     @Id
@@ -23,6 +20,7 @@ public class Veiculo {
     private Long id;
 
     @NotNull
+    @ManyToOne
     private Montadora montadora;
 
     @NotNull
@@ -35,14 +33,15 @@ public class Veiculo {
     private String placa;
 
     @NotNull
+    @ManyToOne
     private Proprietario proprietario;
 
     @NotNull
+    @OneToMany
     private List<Opcional> opcionais;
 
     @NotNull
     private BigDecimal valor;
 
-    @NotNull
     private Boolean isVendido;
 }
