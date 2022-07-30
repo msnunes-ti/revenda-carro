@@ -1,8 +1,8 @@
 package com.example.revendacarro.services;
 
-import com.example.revendacarro.Repository.MontadoraRepository;
 import com.example.revendacarro.Repository.VeiculoRepository;
 import com.example.revendacarro.dto.CadastraVeiculoDTO;
+import com.example.revendacarro.dto.VeiculoDTO;
 import com.example.revendacarro.mapper.*;
 import com.example.revendacarro.model.Opcional;
 import com.example.revendacarro.model.Veiculo;
@@ -19,10 +19,24 @@ public class VeiculoService {
 
     private final VeiculoRepository veiculoRepository;
     private final MontadoraService montadoraService;
-
-    private final MontadoraRepository montadoraRepository;
     private final OpcionalService opcionalService;
     private final ProprietarioService proprietarioService;
+
+    private Veiculo buscaPorId(Long id) {
+        return veiculoRepository.findById(id).orElseThrow(() -> new RuntimeException("Id do Veículo não encontrado."));
+    }
+
+    public VeiculoDTO buscaVeiculoPorId(Long id) {
+        Veiculo veiculo = buscaPorId(id);
+        return VeiculoMapper.toVeiculoDTO(veiculo);
+    }
+
+    public List<VeiculoDTO> buscarTodos(String nome) {
+        if (nome == null) {
+            return VeiculoMapper.veiculoDTOList(veiculoRepository.findAll());
+        }
+        return VeiculoMapper.veiculoDTOList(veiculoRepository.findAllByNome(nome));
+    }
 
     public void cadastraVeiculo(CadastraVeiculoDTO cadastraVeiculoDTO) {
         Veiculo veiculo = CadastraVeiculoDTOMapper.toVeiculo(cadastraVeiculoDTO);
