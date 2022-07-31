@@ -41,7 +41,7 @@ public class Veiculo {
     @ManyToMany
     private List<Opcional> opcionais;
 
-//    @NotNull
+    @NotNull
     private BigDecimal valor;
 
     private Boolean isVendido;

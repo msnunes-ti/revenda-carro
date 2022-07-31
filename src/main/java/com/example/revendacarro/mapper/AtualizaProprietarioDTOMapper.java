@@ -23,5 +23,4 @@ public class AtualizaProprietarioDTOMapper {
         proprietarioDTO.setDataCadastro(atualizaProprietarioDTO.getDataCadastro());
         return proprietarioDTO;
     }
-
 }

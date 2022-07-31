@@ -54,6 +54,5 @@ public class MontadoraService {
         Montadora montadora = buscarPorId(id);
         montadoraRepository.delete(montadora);
     }
-
 }
 

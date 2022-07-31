@@ -9,8 +9,6 @@ import com.example.revendacarro.model.Opcional;
 import com.example.revendacarro.model.Veiculo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

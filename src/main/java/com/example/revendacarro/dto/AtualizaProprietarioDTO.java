@@ -21,6 +21,4 @@ public class AtualizaProprietarioDTO {
 
     @NotNull
     private LocalDate dataCadastro;
-
-
 }

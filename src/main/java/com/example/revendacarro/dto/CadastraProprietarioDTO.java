@@ -18,5 +18,4 @@ public class CadastraProprietarioDTO {
 
     @NotNull
     private LocalDate dataNascimento;
-
 }

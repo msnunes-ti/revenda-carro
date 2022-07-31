@@ -55,5 +55,4 @@ public class ProprietarioService {
         Proprietario proprietario = buscarProprietarioPorId(id);
         proprietarioRepository.delete(proprietario);
     }
-
 }

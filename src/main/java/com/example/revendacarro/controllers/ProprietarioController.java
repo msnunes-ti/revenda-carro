@@ -43,5 +43,4 @@ public class ProprietarioController {
     public void deletarProprietario(@PathVariable Long id) {
         proprietarioService.deletarProprietario(id);
     }
-
 }

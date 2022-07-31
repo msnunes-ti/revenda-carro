@@ -52,7 +52,4 @@ public class OpcionalService {
         Opcional opcional = buscaPorId(id);
         opcionalRepository.delete(opcional);
     }
-
-
-
 }

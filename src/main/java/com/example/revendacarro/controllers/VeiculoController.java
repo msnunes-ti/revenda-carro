@@ -37,11 +37,9 @@ public class VeiculoController {
     public void atualizaVeiculo(@PathVariable Long id, @RequestBody AtualizaVeiculoDTO atualizaVeiculoDTO) {
         veiculoService.atualizaVeiculo(id, atualizaVeiculoDTO);
     }
-    
+
     @DeleteMapping(path = "{id}")
     public void deletarVeiculo(@PathVariable Long id) {
         veiculoService.deletarVeiculo(id);
     }
-
-
 }
