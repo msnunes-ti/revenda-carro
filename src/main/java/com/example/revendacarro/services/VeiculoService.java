@@ -10,6 +10,7 @@ import com.example.revendacarro.model.Veiculo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,19 +27,19 @@ public class VeiculoService {
     private Veiculo buscaPorId(Long id) {
         return veiculoRepository.findById(id).orElseThrow(() -> new RuntimeException("Id do Veículo não encontrado."));
     }
-
+    @Transactional
     public VeiculoDTO buscaVeiculoPorId(Long id) {
         Veiculo veiculo = buscaPorId(id);
         return VeiculoMapper.toVeiculoDTO(veiculo);
     }
-
+    @Transactional
     public List<VeiculoDTO> buscarTodos(String modelo) {
         if (modelo == null) {
             return VeiculoMapper.veiculoDTOList(veiculoRepository.findAll());
         }
         return VeiculoMapper.veiculoDTOList(veiculoRepository.findByModeloContains(modelo));
     }
-
+    @Transactional
     public void cadastraVeiculo(CadastraVeiculoDTO cadastraVeiculoDTO) {
         Veiculo veiculo = CadastraVeiculoDTOMapper.toVeiculo(cadastraVeiculoDTO);
         veiculo.setMontadora(MontadoraDTOMapper.toMontadora(montadoraService.buscarMontadoraPorId(cadastraVeiculoDTO.getMontadoraId())));
@@ -53,7 +54,7 @@ public class VeiculoService {
         veiculo.setIsVendido(false);
         veiculoRepository.save(veiculo);
     }
-
+    @Transactional
     public void atualizaVeiculo(Long id, AtualizaVeiculoDTO atualizaVeiculoDTO) {
         Veiculo veiculoEncontrado = buscaPorId(id);
         Veiculo veiculo = AtualizaVeiculoDTOMapper.toVeiculo(atualizaVeiculoDTO);
@@ -69,7 +70,7 @@ public class VeiculoService {
         veiculo.setOpcionais(opcionalList);
         veiculoRepository.save(veiculo);
     }
-
+    @Transactional
     public void deletarVeiculo(Long id) {
         Veiculo veiculo = buscaPorId(id);
         veiculoRepository.delete(veiculo);

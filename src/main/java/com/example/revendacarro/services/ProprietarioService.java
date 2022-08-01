@@ -11,6 +11,7 @@ import com.example.revendacarro.model.Proprietario;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -22,7 +23,7 @@ public class ProprietarioService {
     private Proprietario buscarProprietarioPorId(Long id) {
         return proprietarioRepository.findById(id).orElseThrow(() -> new RuntimeException("ID do Proprietário não encontrado."));
     }
-
+    @Transactional
     public List<ProprietarioDTO> buscarTodos(String cpfCnpj) {
         if (cpfCnpj == null) {
             List<Proprietario> proprietarioList = proprietarioRepository.findAll();
@@ -31,11 +32,11 @@ public class ProprietarioService {
         List<Proprietario> proprietarioList = proprietarioRepository.findByCpfCnpj(cpfCnpj);
         return ProprietarioMapper.toProprietarioDTOList(proprietarioList);
     }
-
+    @Transactional
     public ProprietarioDTO buscarPorId(Long id) {
         return ProprietarioMapper.toProprietarioDTO(buscarProprietarioPorId(id));
     }
-
+    @Transactional
     public void cadastraProprietario(CadastraProprietarioDTO cadastraProprietarioDTO) {
         long proprietarioEncontrado = proprietarioRepository.countByCpfCnpj(cadastraProprietarioDTO.getCpfCnpj());
         if (proprietarioEncontrado > 0) {
@@ -43,14 +44,14 @@ public class ProprietarioService {
         }
         proprietarioRepository.save(CadastraProprietarioDTOMapper.toProprietario(cadastraProprietarioDTO));
     }
-
+    @Transactional
     public void atualizaProprietario(Long id, AtualizaProprietarioDTO atualizaProprietarioDTO) {
         Proprietario proprietario;
         proprietario = AtualizaProprietarioDTOMapper.toProprietario(atualizaProprietarioDTO);
         proprietario.setId(buscarProprietarioPorId(id).getId());
         proprietarioRepository.save(proprietario);
     }
-
+    @Transactional
     public void deletarProprietario(Long id) {
         Proprietario proprietario = buscarProprietarioPorId(id);
         proprietarioRepository.delete(proprietario);
