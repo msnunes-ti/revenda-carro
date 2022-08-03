@@ -4,7 +4,6 @@ import com.example.revendacarro.Repository.OpcionalRepository;
 import com.example.revendacarro.dto.AtualizaOpcionalDTO;
 import com.example.revendacarro.dto.CadastraOpcionalDTO;
 import com.example.revendacarro.dto.OpcionalDTO;
-import com.example.revendacarro.mapper.CadastraOpcionalMapper;
 import com.example.revendacarro.mapper.OpcionalMapper;
 import com.example.revendacarro.model.Opcional;
 import lombok.RequiredArgsConstructor;
@@ -22,15 +21,15 @@ public class OpcionalService {
     private Opcional buscaPorId(Long id) {
         return opcionalRepository.findById(id).orElseThrow(() -> new RuntimeException("ID do Opcional não encontrado."));
     }
-    @Transactional
+
     public OpcionalDTO buscaOpcionalPeloId(Long id) {
         return OpcionalMapper.toOpcionalDTO(buscaPorId(id));
     }
-    @Transactional
+
     public List<Opcional> buscarTodos() {
         return opcionalRepository.findAll();
     }
-    @Transactional
+
     public List<OpcionalDTO> buscarTodosPeloNome(String nome) {
         if (nome == null) {
             return OpcionalMapper.toOpcionalDTOList(buscarTodos());
@@ -39,7 +38,7 @@ public class OpcionalService {
     }
     @Transactional
     public void cadastraOpcional(CadastraOpcionalDTO cadastraOpcionalDTO) {
-        Opcional opcional = CadastraOpcionalMapper.toOpcional(cadastraOpcionalDTO);
+        Opcional opcional = OpcionalMapper.toOpcionalCadastra(cadastraOpcionalDTO);
         opcionalRepository.save(opcional);
     }
     @Transactional

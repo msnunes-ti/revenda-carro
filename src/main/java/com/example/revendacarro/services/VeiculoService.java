@@ -27,12 +27,12 @@ public class VeiculoService {
     private Veiculo buscaPorId(Long id) {
         return veiculoRepository.findById(id).orElseThrow(() -> new RuntimeException("Id do Veículo não encontrado."));
     }
-    @Transactional
+
     public VeiculoDTO buscaVeiculoPorId(Long id) {
         Veiculo veiculo = buscaPorId(id);
         return VeiculoMapper.toVeiculoDTO(veiculo);
     }
-    @Transactional
+
     public List<VeiculoDTO> buscarTodos(String modelo) {
         if (modelo == null) {
             return VeiculoMapper.veiculoDTOList(veiculoRepository.findAll());
@@ -41,14 +41,14 @@ public class VeiculoService {
     }
     @Transactional
     public void cadastraVeiculo(CadastraVeiculoDTO cadastraVeiculoDTO) {
-        Veiculo veiculo = CadastraVeiculoDTOMapper.toVeiculo(cadastraVeiculoDTO);
-        veiculo.setMontadora(MontadoraDTOMapper.toMontadora(montadoraService.buscarMontadoraPorId(cadastraVeiculoDTO.getMontadoraId())));
+        Veiculo veiculo = VeiculoMapper.toVeiculoCadastra(cadastraVeiculoDTO);
+        veiculo.setMontadora(MontadoraMapper.toMontadora(montadoraService.buscarMontadoraPorId(cadastraVeiculoDTO.getMontadoraId())));
         veiculo.setValor(BigDecimal.valueOf(cadastraVeiculoDTO.getValor()));
-        veiculo.setProprietario(ProprietarioDTOMapper.toProprietario(proprietarioService.buscarPorId(cadastraVeiculoDTO.getProprietarioId())));
+        veiculo.setProprietario(ProprietarioMapper.toProprietario(cadastraVeiculoDTO.getProprietario()));
         List<Long> opcionalId = cadastraVeiculoDTO.getOpcionaisIds();
         List<Opcional> opcionalList = new ArrayList<>();
         for (Long l : opcionalId) {
-            opcionalList.add(OpcionalDTOMapper.toOpcional(opcionalService.buscaOpcionalPeloId(l)));
+            opcionalList.add(OpcionalMapper.toOpcional(opcionalService.buscaOpcionalPeloId(l)));
         }
         veiculo.setOpcionais(opcionalList);
         veiculo.setIsVendido(false);
@@ -57,15 +57,15 @@ public class VeiculoService {
     @Transactional
     public void atualizaVeiculo(Long id, AtualizaVeiculoDTO atualizaVeiculoDTO) {
         Veiculo veiculoEncontrado = buscaPorId(id);
-        Veiculo veiculo = AtualizaVeiculoDTOMapper.toVeiculo(atualizaVeiculoDTO);
+        Veiculo veiculo = VeiculoMapper.toVeiculo(atualizaVeiculoDTO);
         veiculo.setId(veiculoEncontrado.getId());
-        veiculo.setMontadora(MontadoraDTOMapper.toMontadora(montadoraService.buscarMontadoraPorId(atualizaVeiculoDTO.getMontadoraId())));
+        veiculo.setMontadora(MontadoraMapper.toMontadora(montadoraService.buscarMontadoraPorId(atualizaVeiculoDTO.getMontadoraId())));
         veiculo.setValor(BigDecimal.valueOf(atualizaVeiculoDTO.getValor()));
-        veiculo.setProprietario(ProprietarioDTOMapper.toProprietario(proprietarioService.buscarPorId(atualizaVeiculoDTO.getProprietarioId())));
+        veiculo.setProprietario(ProprietarioMapper.toProprietario(proprietarioService.buscarPorId(atualizaVeiculoDTO.getProprietarioId())));
         List<Long> opcionalId = atualizaVeiculoDTO.getOpcionaisIds();
         List<Opcional> opcionalList = new ArrayList<>();
         for (Long l : opcionalId) {
-            opcionalList.add(OpcionalDTOMapper.toOpcional(opcionalService.buscaOpcionalPeloId(l)));
+            opcionalList.add(OpcionalMapper.toOpcional(opcionalService.buscaOpcionalPeloId(l)));
         }
         veiculo.setOpcionais(opcionalList);
         veiculoRepository.save(veiculo);

@@ -10,7 +10,6 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Getter
 @Setter
-@RequiredArgsConstructor
 public class Opcional {
 
     @Id

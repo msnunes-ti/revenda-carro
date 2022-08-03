@@ -29,7 +29,7 @@ public class VeiculoController {
     }
 
     @PostMapping
-    public @ResponseBody void cadastraVeiculo(@RequestBody @Valid @NotNull CadastraVeiculoDTO cadastraVeiculoDTO) {
+    public void cadastraVeiculo(@RequestBody @Valid @NotNull CadastraVeiculoDTO cadastraVeiculoDTO) {
         veiculoService.cadastraVeiculo(cadastraVeiculoDTO);
     }
 

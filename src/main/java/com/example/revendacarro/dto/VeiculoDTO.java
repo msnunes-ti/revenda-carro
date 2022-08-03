@@ -18,7 +18,7 @@ public class VeiculoDTO {
     private Long id;
 
     @NotNull
-    private Montadora montadora;
+    private MontadoraDTO montadora;
 
     @NotNull
     private String modelo;

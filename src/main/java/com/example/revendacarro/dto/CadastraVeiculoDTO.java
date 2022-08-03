@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
-import java.math.BigDecimal;
 import java.util.List;
 
 @Getter
@@ -24,7 +23,7 @@ public class CadastraVeiculoDTO {
     private String placa;
 
     @NotNull
-    private Long proprietarioId;
+    private ProprietarioDTO proprietario;
 
     @NotNull
     private List<Long> opcionaisIds;

@@ -9,7 +9,6 @@ import java.time.LocalDate;
 @Entity
 @Getter
 @Setter
-@RequiredArgsConstructor
 public class Proprietario {
 
     @Id

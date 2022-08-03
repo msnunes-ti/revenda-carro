@@ -1,5 +1,7 @@
 package com.example.revendacarro.mapper;
 
+import com.example.revendacarro.dto.AtualizaMontadoraDTO;
+import com.example.revendacarro.dto.CadastraMontadoraDTO;
 import com.example.revendacarro.dto.MontadoraDTO;
 import com.example.revendacarro.model.Montadora;
 
@@ -21,5 +23,20 @@ public class MontadoraMapper {
             montadoraDTOList.add(toMontadoraDTO(m));
         }
         return montadoraDTOList;
+    }
+    public static Montadora toMontadora(MontadoraDTO montadoraDTO) {
+        Montadora montadora = new Montadora();
+        montadora.setId(montadoraDTO.getId());
+        montadora.setNome(montadoraDTO.getNome());
+        return montadora;
+    }
+    public static Montadora toMontadoraAtualiza(AtualizaMontadoraDTO atualizaMontadoraDTO) {
+        Montadora montadora = new Montadora.Builder().nome(atualizaMontadoraDTO.getNome()).build();
+        return montadora;
+    }
+
+    public static Montadora toMontadoraCadastra(CadastraMontadoraDTO cadastraMontadoraDTO) {
+        Montadora montadora = new Montadora.Builder().nome(cadastraMontadoraDTO.getNome()).build();
+        return montadora;
     }
 }

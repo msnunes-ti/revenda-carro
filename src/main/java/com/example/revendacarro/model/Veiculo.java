@@ -1,7 +1,6 @@
 package com.example.revendacarro.model;
 
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -12,7 +11,6 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@RequiredArgsConstructor
 public class Veiculo {
 
     @Id
@@ -21,6 +19,7 @@ public class Veiculo {
 
     @NotNull
     @ManyToOne
+    @JoinColumn(name = "montadora_id")
     private Montadora montadora;
 
     @NotNull
@@ -35,10 +34,12 @@ public class Veiculo {
 
     @NotNull
     @ManyToOne
+    @JoinColumn(name = "proprietario_id")
     private Proprietario proprietario;
 
     @NotNull
     @ManyToMany
+    @JoinTable(name = "veiculo_opcionais", joinColumns = @JoinColumn(name = "veiculo_id"), inverseJoinColumns = @JoinColumn(name = "opcionais_id"))
     private List<Opcional> opcionais;
 
     @NotNull

@@ -1,5 +1,7 @@
 package com.example.revendacarro.mapper;
 
+import com.example.revendacarro.dto.AtualizaOpcionalDTO;
+import com.example.revendacarro.dto.CadastraOpcionalDTO;
 import com.example.revendacarro.dto.OpcionalDTO;
 import com.example.revendacarro.model.Opcional;
 
@@ -21,4 +23,23 @@ public class OpcionalMapper {
             opcionalDTOList.add(OpcionalMapper.toOpcionalDTO(o));
             return opcionalDTOList;
         }
+
+    public static Opcional toOpcional(OpcionalDTO opcionalDTO) {
+        Opcional opcional = new Opcional();
+        opcional.setId(opcionalDTO.getId());
+        opcional.setNome(opcionalDTO.getNome());
+        return opcional;
+    }
+
+    public static Opcional toOpcionalAtualiza(AtualizaOpcionalDTO atualizaOpcionalDTO) {
+        Opcional opcional = new Opcional();
+        opcional.setNome(atualizaOpcionalDTO.getNome());
+        return opcional;
+    }
+
+    public static Opcional toOpcionalCadastra(CadastraOpcionalDTO cadastraOpcionalDTO) {
+        Opcional opcional = new Opcional();
+        opcional.setNome(cadastraOpcionalDTO.getNome());
+        return opcional;
+    }
 }

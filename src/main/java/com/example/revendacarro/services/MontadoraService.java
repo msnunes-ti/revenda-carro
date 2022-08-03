@@ -4,7 +4,6 @@ import com.example.revendacarro.Repository.MontadoraRepository;
 import com.example.revendacarro.dto.AtualizaMontadoraDTO;
 import com.example.revendacarro.dto.CadastraMontadoraDTO;
 import com.example.revendacarro.dto.MontadoraDTO;
-import com.example.revendacarro.mapper.CadastraMontadoraDTOMapper;
 import com.example.revendacarro.mapper.MontadoraMapper;
 import com.example.revendacarro.model.Montadora;
 import lombok.AllArgsConstructor;
@@ -22,7 +21,7 @@ public class MontadoraService {
     private Montadora buscarPorId(Long id) {
         return montadoraRepository.findById(id).orElseThrow(() -> new RuntimeException("Id da Montadora não encontrado"));
     }
-    @Transactional
+
     public List<MontadoraDTO> buscarTodas(String nome) {
         if (nome == null) {
             List<Montadora> montadoraList = montadoraRepository.findAll();
@@ -41,7 +40,7 @@ public class MontadoraService {
         if (qtdeMontadoras > 0) {
             throw new RuntimeException("Montadora já cadastrada");
         }
-        Montadora montadora = CadastraMontadoraDTOMapper.toMontadora(cadastraMontadoraDTO);
+        Montadora montadora = MontadoraMapper.toMontadoraCadastra(cadastraMontadoraDTO);
         montadoraRepository.save(montadora);
     }
     @Transactional
